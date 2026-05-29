@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { loginUser } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 import {
   FaEnvelope,
   FaLock,
@@ -9,6 +11,7 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -17,14 +20,14 @@ const Login = () => {
 
   const [errors, setErrors] = useState({});
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let newErrors = {};
@@ -40,8 +43,35 @@ const Login = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Login Success", formData);
-    }
+  try {
+    const data = await loginUser({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    localStorage.setItem(
+      "token",
+      data.token
+    );
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(data.user)
+    );
+
+    alert("Login Successful ✅");
+
+    navigate("/dashboard");
+
+  } catch (error) {
+  console.log(error);
+
+  alert(
+    error.response?.data?.message ||
+    error.message
+  );
+}
+}
   };
 
   return (

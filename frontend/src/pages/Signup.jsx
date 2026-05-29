@@ -1,10 +1,22 @@
 import { useState } from "react";
-import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import {
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../services/authService";
 
 const Signup = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] =
+    useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -22,7 +34,7 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let newErrors = {};
@@ -40,7 +52,8 @@ const Signup = () => {
     }
 
     if (!formData.confirmPassword.trim()) {
-      newErrors.confirmPassword = "Confirm Password is required";
+      newErrors.confirmPassword =
+        "Confirm Password is required";
     }
 
     if (
@@ -48,13 +61,33 @@ const Signup = () => {
       formData.confirmPassword &&
       formData.password !== formData.confirmPassword
     ) {
-      newErrors.confirmPassword = "Passwords do not match";
+      newErrors.confirmPassword =
+        "Passwords do not match";
     }
 
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Signup Success", formData);
+      try {
+        const data = await registerUser({
+          name: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        console.log("Signup Success", data);
+
+        alert("Account Created Successfully ✅");
+
+        navigate("/login");
+      } catch (error) {
+        console.log(error);
+
+        alert(
+          error.response?.data?.message ||
+            "Signup Failed"
+        );
+      }
     }
   };
 
@@ -65,9 +98,14 @@ const Signup = () => {
           Create Account 🚀
         </h1>
 
-        <p className="text-slate-400 text-center mt-2">Join PrepWise today</p>
+        <p className="text-slate-400 text-center mt-2">
+          Join PrepWise today
+        </p>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="mt-8 space-y-4"
+        >
           {/* Full Name */}
           <div>
             <div className="relative">
@@ -84,7 +122,9 @@ const Signup = () => {
             </div>
 
             {errors.fullName && (
-              <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.fullName}
+              </p>
             )}
           </div>
 
@@ -104,7 +144,9 @@ const Signup = () => {
             </div>
 
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email}
+              </p>
             )}
           </div>
 
@@ -114,7 +156,11 @@ const Signup = () => {
               <FaLock className="absolute left-4 top-4 text-slate-400" />
 
               <input
-                type={showPassword ? "text" : "password"}
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
+                }
                 name="password"
                 placeholder="Password"
                 value={formData.password}
@@ -124,12 +170,19 @@ const Signup = () => {
 
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() =>
+                  setShowPassword(!showPassword)
+                }
                 className="absolute right-4 top-4 text-slate-400"
               >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {showPassword ? (
+                  <FaEyeSlash />
+                ) : (
+                  <FaEye />
+                )}
               </button>
             </div>
+
             <p className="text-xs text-slate-400 mt-2">
               Password should contain:
             </p>
@@ -139,8 +192,11 @@ const Signup = () => {
               <li>One uppercase letter</li>
               <li>One number</li>
             </ul>
+
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password}
+              </p>
             )}
           </div>
 
@@ -150,7 +206,11 @@ const Signup = () => {
               <FaLock className="absolute left-4 top-4 text-slate-400" />
 
               <input
-                type={showConfirmPassword ? "text" : "password"}
+                type={
+                  showConfirmPassword
+                    ? "text"
+                    : "password"
+                }
                 name="confirmPassword"
                 placeholder="Confirm Password"
                 value={formData.confirmPassword}
@@ -160,10 +220,18 @@ const Signup = () => {
 
               <button
                 type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                onClick={() =>
+                  setShowConfirmPassword(
+                    !showConfirmPassword
+                  )
+                }
                 className="absolute right-4 top-4 text-slate-400"
               >
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                {showConfirmPassword ? (
+                  <FaEyeSlash />
+                ) : (
+                  <FaEye />
+                )}
               </button>
             </div>
 
@@ -183,7 +251,10 @@ const Signup = () => {
 
           <p className="text-center text-slate-400">
             Already have an account?{" "}
-            <Link to="/login" className="text-violet-400 hover:underline">
+            <Link
+              to="/login"
+              className="text-violet-400 hover:underline"
+            >
               Login
             </Link>
           </p>

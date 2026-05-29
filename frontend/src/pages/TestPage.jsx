@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { questions } from "../data/questions";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { saveResult } from "../services/resultService";
 
 const TestPage = () => {
   const { subjectName, level } = useParams();
@@ -28,13 +29,27 @@ const TestPage = () => {
       setCurrentQuestion(currentQuestion - 1);
     }
   };
-  const submitTest = () => {
+ const submitTest = async () => {
+  try {
     let score = 0;
 
     questions.forEach((question, index) => {
-      if (selectedAnswers[index] === question.answer) {
+      if (
+        selectedAnswers[index] === question.answer
+      ) {
         score++;
       }
+    });
+
+    const user = JSON.parse(
+      localStorage.getItem("user")
+    );
+
+    await saveResult({
+      userId: user.id,
+      subject: subjectName,
+      score,
+      total: questions.length,
     });
 
     navigate("/result", {
@@ -43,8 +58,15 @@ const TestPage = () => {
         total: questions.length,
       },
     });
-  };
 
+  } catch (error) {
+  console.log(error);
+
+  console.log(error.response?.data);
+
+  alert("Error saving result");
+}
+  }
   return (
     <div className="min-h-screen bg-slate-950 text-white p-8">
       <h1 className="text-4xl font-bold mb-4">{subjectName.toUpperCase()}</h1>

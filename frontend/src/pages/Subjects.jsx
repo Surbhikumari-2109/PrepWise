@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 const subjects = [
   "DSA",
   "DBMS",
@@ -11,6 +12,9 @@ const subjects = [
 ];
 
 const Subjects = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-slate-950 text-white p-8">
 
@@ -23,6 +27,11 @@ const Subjects = () => {
         {subjects.map((subject) => (
           <div
             key={subject}
+            onClick={() =>
+              navigate(
+                `/subject/${subject.toLowerCase()}`
+              )
+            }
             className="bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:border-violet-500 cursor-pointer transition"
           >
             <h2 className="text-2xl font-semibold">

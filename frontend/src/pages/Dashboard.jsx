@@ -24,20 +24,22 @@ const Dashboard = () => {
           </p>
         </div>
 
-        <button
-          onClick={logoutHandler}
-          className="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl"
-        >
-          Logout
-        </button>
-        <button
-          onClick={() => navigate("/subjects")}
-          className="bg-violet-600 px-5 py-2 rounded-xl"
-        >
-          Take a Test
-        </button>
-      </div>
+        <div className="flex gap-3">
+          <button
+            onClick={() => navigate("/subjects")}
+            className="bg-violet-600 hover:bg-violet-700 px-5 py-2 rounded-xl"
+          >
+            Take a Test
+          </button>
 
+          <button
+            onClick={logoutHandler}
+            className="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
       {/* Stats Cards */}
       <div className="grid md:grid-cols-4 gap-6 mt-10">
         <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">

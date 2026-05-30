@@ -1,10 +1,13 @@
-const mongoose = require("mongoose");
-
+import mongoose from "mongoose";
 const resultSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+    },
+    userName: {
+      type: String,
+      required: true,
     },
 
     subject: {
@@ -22,10 +25,10 @@ const resultSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model(
+export default mongoose.model(
   "Result",
   resultSchema
 );

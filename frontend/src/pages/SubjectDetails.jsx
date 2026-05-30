@@ -19,7 +19,7 @@ const SubjectDetails = () => {
         </div>
 
         <div
-          onClick={() => navigate(`/test/${subjectName}/easy`)}
+          onClick={() => navigate(`/test/${subjectName}/medium`)}
           className="bg-slate-900 p-6 rounded-2xl"
         >
           <h2 className="text-2xl font-semibold">Medium Test</h2>
@@ -28,7 +28,7 @@ const SubjectDetails = () => {
         </div>
 
         <div
-          onClick={() => navigate(`/test/${subjectName}/easy`)}
+          onClick={() => navigate(`/test/${subjectName}/hard`)}
           className="bg-slate-900 p-6 rounded-2xl"
         >
           <h2 className="text-2xl font-semibold">Hard Test</h2>

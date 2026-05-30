@@ -10,15 +10,32 @@ import TestPage from "./pages/TestPage";
 import ResultPage from "./pages/ResultPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import TestHistory from "./pages/TestHistory";
+import Leaderboard from "./pages/Leaderboard";
+import PublicRoute from "./components/PublicRoute";
+import Profile from "./pages/Profile";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
 
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
 
-        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
 
         <Route
           path="/dashboard"
@@ -65,13 +82,29 @@ function App() {
           }
         />
         <Route
-  path="/history"
-  element={
-    <ProtectedRoute>
-      <TestHistory />
-    </ProtectedRoute>
-  }
-/>
+          path="/history"
+          element={
+            <ProtectedRoute>
+              <TestHistory />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/leaderboard"
+          element={
+            <ProtectedRoute>
+              <Leaderboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

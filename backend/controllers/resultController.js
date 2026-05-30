@@ -1,12 +1,12 @@
-const Result = require("../models/Result");
+import Result from "../models/Result.js";
 
-const saveResult = async (req, res) => {
+export const saveResult = async (req, res) => {
   try {
-    const { userId, subject, score, total } =
-      req.body;
+    const { userId, userName, subject, score, total } = req.body;
 
     const result = await Result.create({
       userId,
+      userName,
       subject,
       score,
       total,
@@ -20,7 +20,7 @@ const saveResult = async (req, res) => {
   }
 };
 
-const getUserResults = async (req, res) => {
+export const getUserResults = async (req, res) => {
   try {
     const { userId } = req.params;
 
@@ -30,13 +30,33 @@ const getUserResults = async (req, res) => {
 
     res.json(results);
   } catch (error) {
+     console.log(error);
     res.status(500).json({
       message: error.message,
     });
   }
 };
 
-module.exports = {
-  saveResult,
-  getUserResults,
+export const getLeaderboard = async (req, res) => {
+  try {
+    const leaderboard = await Result.aggregate([
+      {
+        $group: {
+          _id: "$userName",
+          totalScore: { $sum: "$score" },
+        },
+      },
+      {
+        $sort: {
+          totalScore: -1,
+        },
+      },
+    ]);
+
+    res.json(leaderboard);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };

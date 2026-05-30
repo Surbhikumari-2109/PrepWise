@@ -1,22 +1,27 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/db");
-const authRoutes = require("./routes/authRoutes");
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+
+import connectDB from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
+import resultRoutes from "./routes/resultRoutes.js";
+
+dotenv.config();
+
 const app = express();
-const resultRoutes = require("./routes/resultRoutes");
+
 connectDB();
 
 app.use(cors());
 app.use(express.json());
+
 app.use("/", authRoutes);
 app.use("/", resultRoutes);
+
 app.get("/", (req, res) => {
-  const resultRoutes = require(
-  "./routes/resultRoutes"
-);
-  res.send("PrepWise Backend Running ");
+  res.send("PrepWise Backend Running");
 });
+
 app.post("/test", (req, res) => {
   res.json({
     message: "Test route working",

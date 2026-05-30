@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 const subjects = [
   "DSA",
   "DBMS",
-  "Operating Systems",
-  "Computer Networks",
   "Java",
+  "Computer Networks",
+  "Operating Systems",  
   "SQL",
   "JavaScript",
   "React",

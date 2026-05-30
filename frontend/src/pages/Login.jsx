@@ -63,7 +63,8 @@ const handleChange = (e) => {
 
       navigate("/dashboard", {
   replace: true,
-});
+}
+);
 
     } catch (error) {
     console.log(error);

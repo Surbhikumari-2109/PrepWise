@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
-import { questions } from "../data/questions";
+import { questionBank } from "../data/questions";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveResult } from "../services/resultService";
 
 const TestPage = () => {
   const { subjectName, level } = useParams();
+  const questions =
+    questionBank[subjectName.toLowerCase()]?.[level.toLowerCase()] || [];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -15,6 +17,30 @@ const TestPage = () => {
   const seconds = timeLeft % 60;
 
   const navigate = useNavigate();
+
+  if (questions.length === 0) {
+  return (
+    <div className="min-h-screen bg-slate-950 text-white p-8">
+      <h1 className="text-3xl font-bold">
+        No Questions Available
+      </h1>
+
+      <p className="mt-4">
+        Subject: {subjectName}
+      </p>
+
+      <p>
+        Level: {level}
+      </p>
+      <button
+          onClick={() => navigate("/subjects")}
+          className="mt-6 bg-violet-600 hover:bg-violet-700 px-6 py-3 rounded-xl"
+        >
+          Back to Subjects
+        </button>
+    </div>
+  );
+}
   const question = questions[currentQuestion];
   useEffect(() => {
     const timer = setInterval(() => {
@@ -66,9 +92,11 @@ const TestPage = () => {
       ).length;
 
       const user = JSON.parse(localStorage.getItem("user"));
+      console.log(user);
 
       await saveResult({
         userId: user.id,
+        userName: user.name,
         subject: subjectName,
         score,
         total: questions.length,
@@ -102,7 +130,7 @@ const TestPage = () => {
       <p className="text-violet-400 text-xl">{level.toUpperCase()} TEST</p>
       <div className="mt-4">
         <span className="bg-red-500 px-4 py-2 rounded-lg font-bold">
-          ⏱️ Time Left: {minutes}:{seconds.toString().padStart(2, "0")}
+           Time Left: {minutes}:{seconds.toString().padStart(2, "0")}
         </span>
       </div>
 

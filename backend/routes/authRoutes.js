@@ -1,11 +1,11 @@
-const express = require("express");
+import express from "express";
 
 console.log("Auth Routes Loaded ✅");
 
-const {
+import {
   registerUser,
   loginUser,
-} = require("../controllers/authController");
+} from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -16,4 +16,4 @@ router.get("/hello", (req, res) => {
   res.send("Hello from auth routes");
 });
 
-module.exports = router;    
+export default router;

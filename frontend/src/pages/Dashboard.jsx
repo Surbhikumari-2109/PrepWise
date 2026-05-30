@@ -25,6 +25,8 @@ const Dashboard = () => {
       const user = JSON.parse(localStorage.getItem("user"));
 
       const data = await getResults(user.id);
+      console.log("USER ID:", user.id);
+      console.log("RESULTS:", data);
 
       setResults(data);
     } catch (error) {
@@ -57,7 +59,6 @@ const Dashboard = () => {
             Let's continue your learning journey
           </p>
         </div>
-
         <div className="flex gap-3">
           <button
             onClick={() => navigate("/subjects")}
@@ -67,12 +68,26 @@ const Dashboard = () => {
           </button>
 
           <button
+            onClick={() => navigate("/leaderboard")}
+            className="bg-yellow-500 hover:bg-yellow-600 px-5 py-2 rounded-xl text-black font-semibold"
+          >
+             Leaderboard
+          </button>
+
+          <button
+            onClick={() => navigate("/profile")}
+            className="bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-xl"
+          >
+             Profile
+          </button>
+
+          <button
             onClick={logoutHandler}
             className="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl"
           >
             Logout
           </button>
-        </div>
+        </div>{" "}
       </div>
 
       {/* Stats Cards */}

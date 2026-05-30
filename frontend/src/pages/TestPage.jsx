@@ -19,28 +19,22 @@ const TestPage = () => {
   const navigate = useNavigate();
 
   if (questions.length === 0) {
-  return (
-    <div className="min-h-screen bg-slate-950 text-white p-8">
-      <h1 className="text-3xl font-bold">
-        No Questions Available
-      </h1>
+    return (
+      <div className="min-h-screen bg-slate-950 text-white p-8">
+        <h1 className="text-3xl font-bold">No Questions Available</h1>
 
-      <p className="mt-4">
-        Subject: {subjectName}
-      </p>
+        <p className="mt-4">Subject: {subjectName}</p>
 
-      <p>
-        Level: {level}
-      </p>
-      <button
+        <p>Level: {level}</p>
+        <button
           onClick={() => navigate("/subjects")}
           className="mt-6 bg-violet-600 hover:bg-violet-700 px-6 py-3 rounded-xl"
         >
           Back to Subjects
         </button>
-    </div>
-  );
-}
+      </div>
+    );
+  }
   const question = questions[currentQuestion];
   useEffect(() => {
     const timer = setInterval(() => {
@@ -81,10 +75,17 @@ const TestPage = () => {
   const submitTest = async () => {
     try {
       let score = 0;
+      const wrongQuestions = [];
 
       questions.forEach((question, index) => {
         if (selectedAnswers[index] === question.answer) {
           score++;
+        } else {
+          wrongQuestions.push({
+            question: question.question,
+            userAnswer: selectedAnswers[index] || "Not Attempted",
+            correctAnswer: question.answer,
+          });
         }
       });
       const attempted = selectedAnswers.filter(
@@ -93,6 +94,8 @@ const TestPage = () => {
 
       const user = JSON.parse(localStorage.getItem("user"));
       console.log(user);
+      console.log("Wrong Questions:");
+      console.log(wrongQuestions);
 
       await saveResult({
         userId: user.id,
@@ -130,7 +133,7 @@ const TestPage = () => {
       <p className="text-violet-400 text-xl">{level.toUpperCase()} TEST</p>
       <div className="mt-4">
         <span className="bg-red-500 px-4 py-2 rounded-lg font-bold">
-           Time Left: {minutes}:{seconds.toString().padStart(2, "0")}
+          Time Left: {minutes}:{seconds.toString().padStart(2, "0")}
         </span>
       </div>
 

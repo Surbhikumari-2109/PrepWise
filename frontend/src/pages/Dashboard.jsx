@@ -13,7 +13,7 @@ const Dashboard = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-    navigate("/login");
+    window.location.href = "/";
   };
 
   useEffect(() => {
@@ -32,40 +32,26 @@ const Dashboard = () => {
     }
   };
 
-  // =========================
   // Dashboard Analytics
-  // =========================
 
   const totalTests = results.length;
 
-  const totalScore = results.reduce(
-    (sum, result) => sum + result.score,
-    0
-  );
+  const totalScore = results.reduce((sum, result) => sum + result.score, 0);
 
-  const totalQuestions = results.reduce(
-    (sum, result) => sum + result.total,
-    0
-  );
+  const totalQuestions = results.reduce((sum, result) => sum + result.total, 0);
 
   const accuracy =
-    totalQuestions > 0
-      ? ((totalScore / totalQuestions) * 100).toFixed(0)
-      : 0;
+    totalQuestions > 0 ? ((totalScore / totalQuestions) * 100).toFixed(0) : 0;
 
   const bestScore =
-    results.length > 0
-      ? Math.max(...results.map((r) => r.score))
-      : 0;
-
+    results.length > 0 ? Math.max(...results.map((r) => r.score)) : 0;
+  console.log(results);
   return (
     <div className="min-h-screen bg-slate-950 text-white p-8">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-4xl font-bold">
-            Welcome Back, {user?.name} 👋
-          </h1>
+          <h1 className="text-4xl font-bold">Welcome Back, {user?.name} 👋</h1>
 
           <p className="text-slate-400 mt-2">
             Let's continue your learning journey
@@ -94,17 +80,13 @@ const Dashboard = () => {
         <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
           <h3 className="text-slate-400">Tests Attempted</h3>
 
-          <p className="text-3xl font-bold mt-2">
-            {totalTests}
-          </p>
+          <p className="text-3xl font-bold mt-2">{totalTests}</p>
         </div>
 
         <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
           <h3 className="text-slate-400">Accuracy</h3>
 
-          <p className="text-3xl font-bold text-green-400 mt-2">
-            {accuracy}%
-          </p>
+          <p className="text-3xl font-bold text-green-400 mt-2">{accuracy}%</p>
         </div>
 
         <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
@@ -118,41 +100,47 @@ const Dashboard = () => {
         <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
           <h3 className="text-slate-400">Best Score</h3>
 
-          <p className="text-3xl font-bold text-yellow-400 mt-2">
-            {bestScore}
-          </p>
+          <p className="text-3xl font-bold text-yellow-400 mt-2">{bestScore}</p>
         </div>
       </div>
 
       {/* Recent Tests */}
       <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 mt-10">
-        <h2 className="text-xl font-semibold mb-6">
-          Recent Tests
-        </h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-semibold">Recent Tests</h2>
+
+          <button
+            onClick={() => navigate("/history")}
+            className="text-violet-400 hover:text-violet-300"
+          >
+            View Full History →
+          </button>
+        </div>
 
         {results.length === 0 ? (
-          <p className="text-slate-400">
-            No tests attempted yet.
-          </p>
+          <p className="text-slate-400">No tests attempted yet.</p>
         ) : (
           <div className="space-y-4">
-            {results
-              .slice()
-              .reverse()
-              .map((result) => (
-                <div
-                  key={result._id}
-                  className="flex justify-between border-b border-slate-800 pb-3"
-                >
-                  <span className="capitalize">
+            {results.slice(0, 5).map((result) => (
+              <div
+                key={result._id}
+                className="flex justify-between items-center border-b border-slate-800 py-4"
+              >
+                <div>
+                  <p className="capitalize text-3xl font-semibold">
                     {result.subject}
-                  </span>
+                  </p>
 
-                  <span className="text-green-400">
-                    {result.score}/{result.total}
-                  </span>
+                  <p className="text-sm text-slate-400">
+                    {new Date(result.createdAt).toLocaleDateString()}
+                  </p>
                 </div>
-              ))}
+
+                <span className="text-green-400 font-semibold text-3xl">
+                  {result.score}/{result.total}
+                </span>
+              </div>
+            ))}
           </div>
         )}
       </div>

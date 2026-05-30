@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { questions } from "../data/questions";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveResult } from "../services/resultService";
 
@@ -9,8 +9,30 @@ const TestPage = () => {
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [timeLeft, setTimeLeft] = useState(60);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
   const navigate = useNavigate();
   const question = questions[currentQuestion];
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+
+          submitTest();
+
+          return 0;
+        }
+
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
   const selectAnswer = (option) => {
     const updatedAnswers = [...selectedAnswers];
 
@@ -29,49 +51,60 @@ const TestPage = () => {
       setCurrentQuestion(currentQuestion - 1);
     }
   };
- const submitTest = async () => {
-  try {
-    let score = 0;
 
-    questions.forEach((question, index) => {
-      if (
-        selectedAnswers[index] === question.answer
-      ) {
-        score++;
-      }
-    });
+  const submitTest = async () => {
+    try {
+      let score = 0;
 
-    const user = JSON.parse(
-      localStorage.getItem("user")
-    );
+      questions.forEach((question, index) => {
+        if (selectedAnswers[index] === question.answer) {
+          score++;
+        }
+      });
+      const attempted = selectedAnswers.filter(
+        (answer) => answer != null,
+      ).length;
 
-    await saveResult({
-      userId: user.id,
-      subject: subjectName,
-      score,
-      total: questions.length,
-    });
+      const user = JSON.parse(localStorage.getItem("user"));
 
-    navigate("/result", {
-      state: {
+      await saveResult({
+        userId: user.id,
+        subject: subjectName,
         score,
         total: questions.length,
-      },
-    });
+      });
+      console.log({
+        selectedAnswers,
+        score,
+        attempted,
+        total: questions.length,
+      });
 
-  } catch (error) {
-  console.log(error);
+      navigate("/result", {
+        state: {
+          score,
+          attempted,
+          total: questions.length,
+        },
+      });
+    } catch (error) {
+      console.log(error);
 
-  console.log(error.response?.data);
+      console.log(error.response?.data);
 
-  alert("Error saving result");
-}
-  }
+      alert("Error saving result");
+    }
+  };
   return (
     <div className="min-h-screen bg-slate-950 text-white p-8">
       <h1 className="text-4xl font-bold mb-4">{subjectName.toUpperCase()}</h1>
 
       <p className="text-violet-400 text-xl">{level.toUpperCase()} TEST</p>
+      <div className="mt-4">
+        <span className="bg-red-500 px-4 py-2 rounded-lg font-bold">
+          ⏱️ Time Left: {minutes}:{seconds.toString().padStart(2, "0")}
+        </span>
+      </div>
 
       <div className="bg-slate-900 p-8 rounded-2xl mt-10">
         <h2 className="text-2xl font-semibold">

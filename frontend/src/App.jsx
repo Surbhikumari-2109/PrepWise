@@ -8,7 +8,8 @@ import Subjects from "./pages/Subjects";
 import SubjectDetails from "./pages/SubjectDetails";
 import TestPage from "./pages/TestPage";
 import ResultPage from "./pages/ResultPage";
-
+import ProtectedRoute from "./components/ProtectedRoute";
+import TestHistory from "./pages/TestHistory";
 function App() {
   return (
     <BrowserRouter>
@@ -19,15 +20,58 @@ function App() {
 
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/subjects" element={<Subjects />} />
+        <Route
+          path="/subjects"
+          element={
+            <ProtectedRoute>
+              <Subjects />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/subject/:subjectName" element={<SubjectDetails />} />
+        <Route
+          path="/subject/:subjectName"
+          element={
+            <ProtectedRoute>
+              <SubjectDetails />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/test/:subjectName/:level" element={<TestPage />} />
+        <Route
+          path="/test/:subjectName/:level"
+          element={
+            <ProtectedRoute>
+              <TestPage />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/result" element={<ResultPage />} />
+        <Route
+          path="/result"
+          element={
+            <ProtectedRoute>
+              <ResultPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+  path="/history"
+  element={
+    <ProtectedRoute>
+      <TestHistory />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
     </BrowserRouter>
   );

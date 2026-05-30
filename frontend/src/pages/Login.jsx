@@ -47,27 +47,29 @@ const handleChange = (e) => {
     const data = await loginUser({
       email: formData.email,
       password: formData.password,
-    });
+      });
 
-    localStorage.setItem(
-      "token",
-      data.token
-    );
+      localStorage.setItem(
+        "token",
+        data.token
+      );
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(data.user)
-    );
+      localStorage.setItem(
+        "user",
+        JSON.stringify(data.user)
+      );
 
-    alert("Login Successful ✅");
+      alert("Login Successful ✅");
 
-    navigate("/dashboard");
+      navigate("/dashboard", {
+  replace: true,
+});
 
-  } catch (error) {
-  console.log(error);
+    } catch (error) {
+    console.log(error);
 
-  alert(
-    error.response?.data?.message ||
+    alert(
+      error.response?.data?.message ||
     error.message
   );
 }

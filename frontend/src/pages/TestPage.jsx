@@ -112,12 +112,15 @@ const TestPage = () => {
       });
 
       navigate("/result", {
-        state: {
-          score,
-          attempted,
-          total: questions.length,
-        },
-      });
+  state: {
+    score,
+    attempted,
+    total: questions.length,
+    wrongQuestions,
+    subject: subjectName,
+  },
+});
+      
     } catch (error) {
       console.log(error);
 

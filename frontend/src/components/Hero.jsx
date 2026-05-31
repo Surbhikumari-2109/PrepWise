@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+const token = localStorage.getItem("token");
 const Hero = () => {
   return (
     <section className="relative overflow-hidden">
@@ -24,15 +25,15 @@ const Hero = () => {
           </p>
 
           <div className="mt-8 flex gap-4">
-            <Link to="/signup">
+            <Link to={token ? "/dashboard" : "/signup"}>
               <button className="bg-violet-600 px-8 py-4 rounded-xl hover:bg-violet-700">
                 Get Started
               </button>
             </Link>
 
-            <Link to="/login">
+            <Link to={token ? "/dashboard" : "/login"}>
               <button className="border border-slate-700 px-8 py-4 rounded-xl">
-                Take a Test
+                Explore Tests
               </button>
             </Link>
           </div>
@@ -46,7 +47,7 @@ const Hero = () => {
             <div className="bg-slate-800 p-4 rounded-xl">
               <h3 className="text-slate-400">Tests</h3>
 
-              <p className="text-3xl font-bold">24</p>
+              <p className="text-3xl font-bold">36</p>
             </div>
 
             <div className="bg-slate-800 p-4 rounded-xl">
@@ -62,9 +63,9 @@ const Hero = () => {
             </div>
 
             <div className="bg-slate-800 p-4 rounded-xl">
-              <h3 className="text-slate-400">Streak</h3>
+              <h3 className="text-slate-400">Best Score</h3>
 
-              <p className="text-3xl font-bold text-orange-400">15🔥</p>
+              <p className="text-3xl font-bold text-orange-400">150</p>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ Analyze the student's performance and provide:
 
 1. Weak Topics
 2. Concepts to Revise
-3.  Learning Suggestions
+3. Learning Suggestions
 4. Focus Area for Improvement
 
 Rules:

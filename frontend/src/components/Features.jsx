@@ -32,7 +32,7 @@ const Features = () => {
 
           <p className="text-slate-400">
             Track your performance, accuracy, strengths and
-            weaknesses through beautiful dashboards.
+            weaknesses through interactive dashboards.
           </p>
         </div>
 
@@ -45,7 +45,7 @@ const Features = () => {
           </h3>
 
           <p className="text-slate-400">
-            Compete with students globally and climb the rankings
+            Compete with other students  and climb the rankings
             with every test you take.
           </p>
         </div>

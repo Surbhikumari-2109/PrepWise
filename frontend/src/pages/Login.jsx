@@ -59,12 +59,9 @@ const handleChange = (e) => {
         JSON.stringify(data.user)
       );
 
-      alert("Login Successful ✅");
+      // alert("Login Successful ✅");
 
-      navigate("/dashboard", {
-  replace: true,
-}
-);
+      navigate("/dashboard");
 
     } catch (error) {
     console.log(error);

@@ -2,31 +2,45 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-slate-800 mt-20">
+    <footer id="footer" className="border-t border-slate-800 mt-20">
       <div className="max-w-7xl mx-auto px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
-
         <div>
-          <h2 className="text-xl font-bold text-violet-400">
-            PrepWise
-          </h2>
+          <h2 className="text-xl font-bold text-violet-400">PrepWise</h2>
 
           <p className="text-slate-400 text-sm mt-1">
             Learn Smart. Rank Higher.
           </p>
         </div>
 
-        <div className="flex gap-5 text-xl text-slate-400">
-          <a href="#" className="hover:text-violet-400">
-            <FaGithub />
-          </a>
+        <div className="flex flex-col items-center">
+          <p className="text-sm text-slate-300 mb-2">Contact Me</p>
 
-          <a href="#" className="hover:text-violet-400">
-            <FaLinkedin />
-          </a>
+          <div className="flex gap-5 text-xl text-slate-400">
+            <a
+              href="https://github.com/Surbhikumari-2109"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-violet-400 transition"
+            >
+              <FaGithub />
+            </a>
 
-          <a href="#" className="hover:text-violet-400">
-            <FaEnvelope />
-          </a>
+            <a
+              href="https://www.linkedin.com/in/surbhi-kumari-194046316/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-violet-400 transition"
+            >
+              <FaLinkedin />
+            </a>
+
+            <a
+              href="mailto:surbhipriya2109@gmail.com"
+              className="hover:text-violet-400 transition"
+            >
+              <FaEnvelope />
+            </a>
+          </div>
         </div>
       </div>
 

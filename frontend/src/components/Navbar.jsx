@@ -1,41 +1,40 @@
 import { Link } from "react-router-dom";
 const Navbar = () => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
   return (
     <nav className="flex items-center justify-between px-8 py-6 border-b border-slate-800">
       <h1 className="text-3xl font-bold text-violet-400">PrepWise</h1>
 
       <div className="hidden md:flex items-center gap-8 text-slate-300">
-        <a href="#">Home</a>
-        <a href="#">Features</a>
-        <a href="#">Subjects</a>
-        <a href="#">Leaderboard</a>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#footer">Contact</a>
       </div>
 
       <div className="flex gap-4">
-  {token ? (
-    <Link to="/dashboard">
-      <button className="px-5 py-2 bg-violet-600 rounded-xl hover:bg-violet-700">
-        Dashboard
-      </button>
-    </Link>
-  ) : (
-    <>
-      <Link to="/login">
-        <button className="px-5 py-2 border border-slate-700 rounded-xl hover:border-violet-500">
-          Login
-        </button>
-      </Link>
+        {token ? (
+          <Link to="/dashboard">
+            <button className="px-5 py-2 bg-violet-600 rounded-xl hover:bg-violet-700">
+              Dashboard
+            </button>
+          </Link>
+        ) : (
+          <>
+            <Link to="/login">
+              <button className="px-5 py-2 border border-slate-700 rounded-xl hover:border-violet-500">
+                Login
+              </button>
+            </Link>
 
-      <Link to="/signup">
-        <button className="px-5 py-2 bg-violet-600 rounded-xl hover:bg-violet-700">
-          Sign Up
-        </button>
-      </Link>
-    </>
-  )}
-</div>
+            <Link to="/signup">
+              <button className="px-5 py-2 bg-violet-600 rounded-xl hover:bg-violet-700">
+                Sign Up
+              </button>
+            </Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 };

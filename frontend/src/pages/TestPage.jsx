@@ -112,15 +112,14 @@ const TestPage = () => {
       });
 
       navigate("/result", {
-  state: {
-    score,
-    attempted,
-    total: questions.length,
-    wrongQuestions,
-    subject: subjectName,
-  },
-});
-      
+        state: {
+          score,
+          attempted,
+          total: questions.length,
+          wrongQuestions,
+          subject: subjectName,
+        },
+      });
     } catch (error) {
       console.log(error);
 
@@ -134,10 +133,17 @@ const TestPage = () => {
       <h1 className="text-4xl font-bold mb-4">{subjectName.toUpperCase()}</h1>
 
       <p className="text-violet-400 text-xl">{level.toUpperCase()} TEST</p>
-      <div className="mt-4">
+      <div className="mt-4 flex items-center justify-between">
         <span className="bg-red-500 px-4 py-2 rounded-lg font-bold">
           Time Left: {minutes}:{seconds.toString().padStart(2, "0")}
         </span>
+
+        <button
+          onClick={submitTest}
+          className="bg-emerald-500 hover:bg-emerald-500 px-6 py-3 rounded-xl text-white font-semibold shadow-lg transition"
+        >
+          ✓Submit Test
+        </button>
       </div>
 
       <div className="bg-slate-900 p-8 rounded-2xl mt-10">
@@ -177,21 +183,17 @@ const TestPage = () => {
             ← Previous
           </button>
 
-          {currentQuestion === questions.length - 1 ? (
-            <button
-              onClick={submitTest}
-              className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-xl"
-            >
-              Submit Test
-            </button>
-          ) : (
-            <button
-              onClick={nextQuestion}
-              className="bg-violet-600 hover:bg-violet-700 px-6 py-3 rounded-xl"
-            >
-              Next →
-            </button>
-          )}
+          <button
+            onClick={nextQuestion}
+            disabled={currentQuestion === questions.length - 1}
+            className={`px-6 py-3 rounded-xl ${
+              currentQuestion === questions.length - 1
+                ? "bg-slate-700 cursor-not-allowed"
+                : "bg-violet-600 hover:bg-violet-700"
+            }`}
+          >
+            Next →
+          </button>
         </div>
       </div>
     </div>

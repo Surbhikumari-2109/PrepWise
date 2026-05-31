@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { loginUser } from "../services/authService";
 import { useNavigate } from "react-router-dom";
-import {
-  FaEnvelope,
-  FaLock,
-  FaEye,
-  FaEyeSlash,
-} from "react-icons/fa";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -20,12 +15,12 @@ const Login = () => {
 
   const [errors, setErrors] = useState({});
 
-const handleChange = (e) => {
-  setFormData({
-    ...formData,
-    [e.target.name]: e.target.value,
-  });
-};
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,41 +38,39 @@ const handleChange = (e) => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-  try {
-    const data = await loginUser({
-      email: formData.email,
-      password: formData.password,
-      });
+      try {
+        const data = await loginUser({
+          email: formData.email,
+          password: formData.password,
+        });
+        console.log("LOGIN DATA:", data);
 
-      localStorage.setItem(
-        "token",
-        data.token
-      );
+        localStorage.setItem("token", data.token);
 
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
-      );
+        localStorage.setItem("role", data.user.role);
 
-      // alert("Login Successful ✅");
+        localStorage.setItem("user", JSON.stringify(data.user));
+        console.log("USER SAVED:", localStorage.getItem("user"));
+        console.log("ROLE SAVED:", localStorage.getItem("role"));
 
-      navigate("/dashboard");
+        // alert("Login Successful ✅");
 
-    } catch (error) {
-    console.log(error);
+        if (data.user.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        console.log(error);
 
-    alert(
-      error.response?.data?.message ||
-    error.message
-  );
-}
-}
+        alert(error.response?.data?.message || error.message);
+      }
+    }
   };
 
   return (
     <div className="min-h-screen bg-slate-950 flex justify-center items-center px-4">
       <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
-
         <h1 className="text-3xl font-bold text-white text-center">
           Welcome Back 👋
         </h1>
@@ -86,11 +79,7 @@ const handleChange = (e) => {
           Login to your PrepWise account
         </p>
 
-        <form
-          onSubmit={handleSubmit}
-          className="mt-8 space-y-4"
-        >
-
+        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
           {/* Email */}
           <div>
             <div className="relative">
@@ -107,9 +96,7 @@ const handleChange = (e) => {
             </div>
 
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
             )}
           </div>
 
@@ -129,23 +116,15 @@ const handleChange = (e) => {
 
               <button
                 type="button"
-                onClick={() =>
-                  setShowPassword(!showPassword)
-                }
+                onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-4 top-4 text-slate-400"
               >
-                {showPassword ? (
-                  <FaEyeSlash />
-                ) : (
-                  <FaEye />
-                )}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
 
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.password}
-              </p>
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
             )}
           </div>
 
@@ -158,14 +137,10 @@ const handleChange = (e) => {
 
           <p className="text-center text-slate-400">
             Don't have an account?{" "}
-            <Link
-              to="/signup"
-              className="text-violet-400 hover:underline"
-            >
+            <Link to="/signup" className="text-violet-400 hover:underline">
               Sign Up
             </Link>
           </p>
-
         </form>
       </div>
     </div>

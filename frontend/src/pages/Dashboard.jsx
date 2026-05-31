@@ -1,16 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { getResults } from "../services/resultService";
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
+  const role = localStorage.getItem("role");
+
 
   const [results, setResults] = useState([]);
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("role");
 
     navigate("/");
   };
@@ -48,19 +52,18 @@ const Dashboard = () => {
     results.length > 0 ? Math.max(...results.map((r) => r.score)) : 0;
   console.log(results);
   return (
-    
     <div className="min-h-screen bg-slate-950 text-white p-4 md:p-8">
       <Link
-  to="/"
-  className="inline-flex items-center gap-2 text-lg font-medium text-violet-400 hover:text-violet-300 transition"
->
-  ← Home
-</Link>
+        to="/"
+        className="inline-flex items-center gap-2 text-lg font-medium text-violet-400 hover:text-violet-300 transition"
+      >
+        ← Home
+      </Link>
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl md:text-4xl font-bold">
-            Welcome Back, {user?.name} 
+            Welcome Back, {user?.name}
           </h1>
 
           <p className="text-slate-400 mt-2">
@@ -69,30 +72,50 @@ const Dashboard = () => {
         </div>
         <div className="grid grid-cols-2 md:flex gap-3 w-full md:w-auto">
           {" "}
-          <button
-            onClick={() => navigate("/subjects")}
-            className="w-full md:w-auto bg-violet-600 hover:bg-violet-700 px-5 py-2 rounded-xl"
-          >
-            Take a Test
-          </button>
-          <button
-            onClick={() => navigate("/leaderboard")}
-            className=" w-full md:w-auto bg-yellow-500 hover:bg-yellow-600 px-5 py-2 rounded-xl text-black font-semibold"
-          >
-            Leaderboard
-          </button>
-          <button
-            onClick={() => navigate("/profile")}
-            className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-xl"
-          >
-            Profile
-          </button>
-          <button
-            onClick={logoutHandler}
-            className=" w-full md:w-auto bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl"
-          >
-            Logout
-          </button>
+          <div className="grid grid-cols-2 md:flex gap-3 w-full md:w-auto">
+
+  {role === "student" && (
+    <button
+      onClick={() => navigate("/subjects")}
+      className="w-full md:w-auto bg-violet-600 hover:bg-violet-700 px-5 py-2 rounded-xl"
+    >
+      Take Test
+    </button>
+  )}
+
+  {role === "admin" && (
+    <button
+      onClick={() => navigate("/admin")}
+      className="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600 px-5 py-2 rounded-xl"
+    >
+      Admin Panel
+    </button>
+  )}
+
+  <button
+    onClick={() => navigate("/leaderboard")}
+    className="w-full md:w-auto bg-yellow-500 hover:bg-yellow-600 px-5 py-2 rounded-xl text-black font-semibold"
+  >
+    Leaderboard
+  </button>
+
+  {role === "student" && (
+    <button
+      onClick={() => navigate("/profile")}
+      className="w-full md:w-auto bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-xl"
+    >
+      Profile
+    </button>
+  )}
+
+  <button
+    onClick={logoutHandler}
+    className="w-full md:w-auto bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl"
+  >
+    Logout
+  </button>
+
+</div>
         </div>{" "}
       </div>
 

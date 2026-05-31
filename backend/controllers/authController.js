@@ -47,10 +47,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const isMatch = await bcrypt.compare(
-      password,
-      user.password
-    );
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(400).json({
@@ -60,12 +57,13 @@ export const loginUser = async (req, res) => {
 
     res.status(200).json({
       message: "Login Successful",
-      token: generateToken(user._id),
+      token: generateToken(user._id, user.role),
 
       user: {
         id: user._id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {

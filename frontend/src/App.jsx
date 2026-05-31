@@ -13,6 +13,8 @@ import TestHistory from "./pages/TestHistory";
 import Leaderboard from "./pages/Leaderboard";
 import PublicRoute from "./components/PublicRoute";
 import Profile from "./pages/Profile";
+import AdminRoute from "./components/AdminRoute";
+import AdminDashboard from "./pages/AdminDashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -103,6 +105,14 @@ function App() {
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
           }
         />
       </Routes>

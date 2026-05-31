@@ -1,16 +1,72 @@
-# React + Vite
+ #  PrepWise
+### AI-Powered Learning Assessment Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PrepWise is an AI-powered learning assessment platform designed to help students evaluate their knowledge, identify weak areas, and improve through personalized feedback.
 
-Currently, two official plugins are available:
+Unlike traditional assessment platforms that only display scores, PrepWise provides AI-generated insights to help learners understand their mistakes and focus on the concepts that need improvement.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## # Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Secure Authentication 
+- Subject-Based Assessments
+-  Multiple Difficulty Levels (Easy, Medium, Hard)
+-  Timer-Based Tests
+-  AI-Powered Feedback using Google Gemini
+-  Performance Analytics & Accuracy Tracking
+-  Assessment History
+-  Leaderboard System
+-  User Profile Dashboard
+-  Fully Responsive Design
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## # Tech Stack
+
+**Frontend**
+- React.js
+- React Router DOM
+- Tailwind CSS
+- Axios
+
+**Backend**
+- Node.js
+- Express.js
+- JWT Authentication
+
+**Database**
+- MongoDB Atlas
+- Mongoose
+
+**AI Integration**
+- Google Gemini API
+
+---
+
+## # Why PrepWise?
+
+Most learning platforms only show scores after an assessment.
+
+PrepWise goes a step further by analyzing incorrect responses and providing AI-generated feedback that helps learners:
+
+- Identify weak topics
+- Understand mistakes
+- Focus on revision areas
+- Improve overall performance
+
+---
+
+##  Author
+
+**Surbhi Kumari**
+
+📧 surbhipriya2109@gmail.com
+
+💼 LinkedIn: https://www.linkedin.com/in/surbhi-kumari-194046316/
+
+💻 GitHub: https://github.com/Surbhikumari-2109
+
+---
+
+⭐ If you like this project, consider giving it a star!

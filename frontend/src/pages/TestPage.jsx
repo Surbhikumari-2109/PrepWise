@@ -112,6 +112,7 @@ const TestPage = () => {
       });
 
       navigate("/result", {
+        replace: true,
         state: {
           score,
           attempted,

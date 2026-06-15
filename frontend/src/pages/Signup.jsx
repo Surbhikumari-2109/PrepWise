@@ -5,6 +5,7 @@ import {
   FaLock,
   FaEye,
   FaEyeSlash,
+  FaArrowLeft,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
@@ -93,6 +94,15 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 flex justify-center items-center px-4">
+      <div className="absolute top-8 left-8">
+  <Link
+    to="/"
+    className="flex items-center gap-2 text-violet-400 hover:text-violet-300 font-medium transition"
+  >
+    <FaArrowLeft />
+    Home
+  </Link>
+</div>
       <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
         <h1 className="text-3xl font-bold text-white text-center">
           Create Account 🚀

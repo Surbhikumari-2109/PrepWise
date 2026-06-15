@@ -60,3 +60,16 @@ export const getLeaderboard = async (req, res) => {
     });
   }
 };
+export const getAllResults = async (req, res) => {
+  try {
+    const results = await Result.find().sort({
+      createdAt: -1,
+    });
+
+    res.status(200).json(results);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

@@ -3,7 +3,7 @@ const token = localStorage.getItem("token");
 const Hero = () => {
   return (
     <section className="relative overflow-hidden">
-      {/* Glow Effects */}
+      
       <div className="absolute top-20 left-20 h-72 w-72 bg-violet-600/20 blur-[120px] rounded-full"></div>
 
       <div className="absolute right-20 top-40 h-72 w-72 bg-blue-600/20 blur-[120px] rounded-full"></div>

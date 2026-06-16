@@ -4,8 +4,7 @@ export const saveResult = async (
   resultData
 ) => {
   const response = await axios.post(
-    "http://localhost:5000/result",
-    resultData
+    "https://prepwise-q4c3.onrender.com/result",
   );
 
   return response.data;
@@ -15,7 +14,7 @@ export const getResults = async (
   userId
 ) => {
   const response = await axios.get(
-    `http://localhost:5000/results/${userId}`
+    `https://prepwise-q4c3.onrender.com/results/${userId}`
   );
 
   return response.data;

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://prepwise-q4c3.onrender.com";
 
 export const loginUser = async (userData) => {
   const response = await axios.post(

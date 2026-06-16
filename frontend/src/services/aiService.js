@@ -5,7 +5,7 @@ export const getAIFeedback = async (
   wrongQuestions
 ) => {
   const response = await axios.post(
-    "http://localhost:5000/ai-feedback",
+    "https://prepwise-q4c3.onrender.com/ai-feedback",
     {
       subject,
       wrongQuestions,

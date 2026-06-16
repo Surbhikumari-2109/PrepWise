@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getLeaderboard = async () => {
   const response = await axios.get(
-    "http://localhost:5000/leaderboard"
+    "https://prepwise-q4c3.onrender.com/leaderboard"
   );
 
   return response.data;

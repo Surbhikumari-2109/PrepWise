@@ -58,7 +58,7 @@ const Login = () => {
         console.log("USER SAVED:", localStorage.getItem("user"));
         console.log("ROLE SAVED:", localStorage.getItem("role"));
 
-        toast.success("Login Successful ✅");
+        
 
         if (data.user.role === "admin") {
           navigate("/admin");

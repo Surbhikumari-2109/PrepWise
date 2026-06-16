@@ -9,6 +9,8 @@ import {
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
+import toast from "react-hot-toast";
+
 
 const Signup = () => {
   const navigate = useNavigate();

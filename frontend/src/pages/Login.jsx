@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -53,10 +54,11 @@ const Login = () => {
         localStorage.setItem("role", data.user.role);
 
         localStorage.setItem("user", JSON.stringify(data.user));
+        toast.success("Login Successful ✅");
         console.log("USER SAVED:", localStorage.getItem("user"));
         console.log("ROLE SAVED:", localStorage.getItem("role"));
 
-        // alert("Login Successful ✅");
+        toast.success("Login Successful ✅");
 
         if (data.user.role === "admin") {
           navigate("/admin");
@@ -66,7 +68,7 @@ const Login = () => {
       } catch (error) {
         console.log(error);
 
-        alert(error.response?.data?.message || error.message);
+        toast.error(error.response?.data?.message || "Login failed");
       }
     }
   };

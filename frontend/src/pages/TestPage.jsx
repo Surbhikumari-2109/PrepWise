@@ -3,6 +3,7 @@ import { questionBank } from "../data/questions";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { saveResult } from "../services/resultService";
+import toast from "react-hot-toast";
 
 const TestPage = () => {
   const { subjectName, level } = useParams();
@@ -54,9 +55,9 @@ const TestPage = () => {
       if (document.hidden) {
         setWarnings((prev) => prev + 1);
 
-        alert(
-          "⚠ Warning: Tab switching detected. Please stay on the test page.",
-        );
+        toast.error("Tab switching detected. Please stay on the test page.", {
+          duration: 3000,
+        });
       }
     };
 
@@ -129,7 +130,12 @@ const TestPage = () => {
 
       const user = JSON.parse(localStorage.getItem("user"));
 
-      console.log("USER:", user);
+      // console.log("USER:", user);
+      if (!user) {
+        toast.error("Session expired. Please login again.");
+        navigate("/login");
+        return;
+      }
 
       const payload = {
         userId: user.id,
@@ -164,7 +170,7 @@ const TestPage = () => {
 
       console.log(error.response?.data);
 
-      alert("Error saving result");
+      toast.error("Error saving result");
     }
   };
   return (
@@ -182,7 +188,7 @@ const TestPage = () => {
           onClick={submitTest}
           className="bg-emerald-500 hover:bg-emerald-500 px-6 py-3 rounded-xl text-white font-semibold shadow-lg transition"
         >
-          ✓Submit Test
+          Submit Test
         </button>
       </div>
 

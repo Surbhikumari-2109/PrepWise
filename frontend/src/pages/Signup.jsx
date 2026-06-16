@@ -98,17 +98,15 @@ const Signup = () => {
       });
 
       console.log("Signup Success", data);
-
-      alert("Account Created Successfully ✅");
+          toast.success("Account Created Successfully ");
 
       navigate("/login");
     } catch (error) {
       console.log(error);
 
-      alert(
-        error.response?.data?.message ||
-          "Signup Failed"
-      );
+       toast.error(
+    error.response?.data?.message || "Signup failed"
+  );
     }
   }
 };

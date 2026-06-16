@@ -8,7 +8,8 @@ import authRoutes from "./routes/authRoutes.js";
 import resultRoutes from "./routes/resultRoutes.js";
 
 import aiRoutes from "./routes/aiRoutes.js";
-
+import questionRoutes from "./routes/questionRoutes.js";
+import subjectRoutes from "./routes/subjectRoutes.js";
 
 console.log("KEY EXISTS:", !!process.env.GEMINI_API_KEY);
 console.log(
@@ -26,6 +27,8 @@ app.use(express.json());
 app.use("/", authRoutes);
 app.use("/", resultRoutes);
 app.use("/", aiRoutes);
+app.use("/", subjectRoutes);
+app.use("/", questionRoutes);
 
 app.get("/", (req, res) => {
   res.send("PrepWise Backend Running");

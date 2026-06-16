@@ -15,6 +15,8 @@ import PublicRoute from "./components/PublicRoute";
 import Profile from "./pages/Profile";
 import AdminRoute from "./components/AdminRoute";
 import AdminDashboard from "./pages/AdminDashboard";
+import QuestionsManagement from "./pages/QuestionsManagement";
+import ManageSubjects from "./pages/ManageSubjects";
 function App() {
   return (
     <BrowserRouter>
@@ -112,6 +114,22 @@ function App() {
           element={
             <AdminRoute>
               <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/questions"
+          element={
+            <AdminRoute>
+              <QuestionsManagement />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/subjects"
+          element={
+            <AdminRoute>
+              <ManageSubjects />
             </AdminRoute>
           }
         />

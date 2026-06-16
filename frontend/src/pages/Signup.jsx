@@ -18,6 +18,7 @@ const Signup = () => {
 
   const [showConfirmPassword, setShowConfirmPassword] =
     useState(false);
+    
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -36,61 +37,81 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    let newErrors = {};
+  let newErrors = {};
 
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = "Full Name is required";
+  // Full Name Validation
+  if (!formData.fullName.trim()) {
+    newErrors.fullName = "Full Name is required";
+  }
+
+  // Email Validation
+  if (!formData.email.trim()) {
+    newErrors.email = "Email is required";
+  } else {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email =
+        "Please enter a valid email address";
     }
+  }
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+  // Password Validation
+  if (!formData.password.trim()) {
+    newErrors.password = "Password is required";
+  } else {
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    if (!passwordRegex.test(formData.password)) {
+      newErrors.password =
+        "Password must be at least 8 characters and contain one uppercase letter and one number";
     }
+  }
 
-    if (!formData.password.trim()) {
-      newErrors.password = "Password is required";
+  // Confirm Password Validation
+  if (!formData.confirmPassword.trim()) {
+    newErrors.confirmPassword =
+      "Confirm Password is required";
+  }
+
+  // Password Match Validation
+  if (
+    formData.password &&
+    formData.confirmPassword &&
+    formData.password !== formData.confirmPassword
+  ) {
+    newErrors.confirmPassword =
+      "Passwords do not match";
+  }
+
+  setErrors(newErrors);
+
+  if (Object.keys(newErrors).length === 0) {
+    try {
+      const data = await registerUser({
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      console.log("Signup Success", data);
+
+      alert("Account Created Successfully ✅");
+
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+          "Signup Failed"
+      );
     }
-
-    if (!formData.confirmPassword.trim()) {
-      newErrors.confirmPassword =
-        "Confirm Password is required";
-    }
-
-    if (
-      formData.password &&
-      formData.confirmPassword &&
-      formData.password !== formData.confirmPassword
-    ) {
-      newErrors.confirmPassword =
-        "Passwords do not match";
-    }
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        const data = await registerUser({
-          name: formData.fullName,
-          email: formData.email,
-          password: formData.password,
-        });
-
-        console.log("Signup Success", data);
-
-        alert("Account Created Successfully ✅");
-
-        navigate("/login");
-      } catch (error) {
-        console.log(error);
-
-        alert(
-          error.response?.data?.message ||
-            "Signup Failed"
-        );
-      }
-    }
-  };
+  }
+};
 
   return (
     <div className="min-h-screen bg-slate-950 flex justify-center items-center px-4">

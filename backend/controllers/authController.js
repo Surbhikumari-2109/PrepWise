@@ -1,11 +1,39 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
-
 export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    // Required Fields Validation
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
+    }
+
+    // Email Validation
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        message: "Please enter a valid email address",
+      });
+    }
+
+    // Password Validation
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message:
+          "Password must be at least 8 characters and contain one uppercase letter and one number",
+      });
+    }
+
+    // Existing User Check
     const existingUser = await User.findOne({
       email,
     });
@@ -16,8 +44,13 @@ export const registerUser = async (req, res) => {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash Password
+    const hashedPassword = await bcrypt.hash(
+      password,
+      10
+    );
 
+    // Create User
     const user = await User.create({
       name,
       email,
@@ -29,15 +62,21 @@ export const registerUser = async (req, res) => {
       user,
     });
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+  setServerError(
+    error.response?.data?.message || "Signup Failed"
+  );
+}
 };
-
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Required Fields Validation
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Email and Password are required",
+      });
+    }
 
     const user = await User.findOne({ email });
 
@@ -47,7 +86,10 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(
+      password,
+      user.password
+    );
 
     if (!isMatch) {
       return res.status(400).json({
@@ -72,6 +114,7 @@ export const loginUser = async (req, res) => {
     });
   }
 };
+
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password");

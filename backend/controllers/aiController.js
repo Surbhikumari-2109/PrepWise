@@ -4,16 +4,19 @@ export const getAIFeedback = async (req, res) => {
   try {
     const { subject, wrongQuestions } = req.body;
 
-    const feedback =
-      await analyzeWrongAnswers(
-        subject,
-        wrongQuestions
-      );
+    console.log("SUBJECT:", subject);
+    console.log("WRONG QUESTIONS:", wrongQuestions);
 
-    res.json({
-      feedback,
-    });
+    const feedback = await analyzeWrongAnswers(
+      subject,
+      wrongQuestions
+    );
+
+    res.json({ feedback });
   } catch (error) {
+    console.error("AI ERROR:", error);
+    console.error("MESSAGE:", error.message);
+
     res.status(500).json({
       message: error.message,
     });

@@ -188,7 +188,7 @@ const Dashboard = () => {
             onClick={() => navigate("/history")}
             className="text-violet-400 hover:text-violet-300"
           >
-            📊 View Full History →
+             View Full History →
           </button>
 
         </div>

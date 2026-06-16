@@ -36,6 +36,40 @@ const TestPage = () => {
     );
   }
   const question = questions[currentQuestion];
+  // ///////
+  useEffect(() => {
+    const enterFullscreen = async () => {
+      try {
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        }
+      } catch (error) {
+        console.log("Fullscreen not supported");
+      }
+    };
+
+    enterFullscreen();
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setWarnings((prev) => prev + 1);
+
+        alert(
+          "⚠ Warning: Tab switching detected. Please stay on the test page.",
+        );
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+    };
+  }, []);
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -53,6 +87,7 @@ const TestPage = () => {
 
     return () => clearInterval(timer);
   }, []);
+  /////////////
   const selectAnswer = (option) => {
     const updatedAnswers = [...selectedAnswers];
 
@@ -134,6 +169,7 @@ const TestPage = () => {
       <h1 className="text-4xl font-bold mb-4">{subjectName.toUpperCase()}</h1>
 
       <p className="text-violet-400 text-xl">{level.toUpperCase()} TEST</p>
+      
       <div className="mt-4 flex items-center justify-between">
         <span className="bg-red-500 px-4 py-2 rounded-lg font-bold">
           Time Left: {minutes}:{seconds.toString().padStart(2, "0")}

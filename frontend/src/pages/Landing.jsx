@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import Stats from "../components/Stats";
+// import Stats from "../components/Stats";
 import Features from "../components/Features";
 import Footer from "../components/Footer";
 
@@ -13,7 +13,7 @@ const Landing = () => {
         <Hero />
       </section>
 
-      <Stats />
+      {/* <Stats /> */}
 
       <section id="about">
         <Features />

@@ -1,20 +1,20 @@
 const Stats = () => {
   const stats = [
-    "50,000+ Questions",
-    "10,000+ Students",
-    "95% Success Rate",
-    "AI Powered",
+    "🤖 AI-Powered Feedback",
+    "📚 Multiple Subjects",
+    "📈 Performance Tracking",
+    "🏆 Competitive Leaderboard",
   ];
 
   return (
-    <section className="max-w-6xl mx-auto py-16 px-8">
-      <div className="grid md:grid-cols-4 gap-6">
+    <section className="max-w-6xl mx-auto py-16 px-4 md:px-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {stats.map((item, index) => (
           <div
             key={index}
-            className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center"
+            className="bg-slate-900 border border-slate-800 rounded-2xl p-6 text-center hover:border-violet-500 transition"
           >
-            <h3 className="text-xl font-semibold">
+            <h3 className="text-sm md:text-lg font-semibold">
               {item}
             </h3>
           </div>

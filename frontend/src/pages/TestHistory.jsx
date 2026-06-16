@@ -23,7 +23,7 @@ const TestHistory = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-white p-8">
       <h1 className="text-4xl font-bold mb-8">
-        Test History 📜
+        Test History 
       </h1>
 
       <div className="bg-slate-900 rounded-2xl overflow-hidden">

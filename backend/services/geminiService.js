@@ -4,11 +4,12 @@ export const analyzeWrongAnswers = async (
   subject,
   wrongQuestions
 ) => {
-  const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-  });
+  try {
+    const ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+    });
 
-  const prompt = `
+    const prompt = `
 You are an educational mentor.
 
 Subject: ${subject}
@@ -32,11 +33,28 @@ Rules:
 - Be encouraging and motivating
 `;
 
-  const response =
-    await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-    });
+    const response =
+      await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
 
-  return response.text;
-};  
+    return response.text;
+  } catch (error) {
+    console.error("AI ERROR:", error);
+
+    return `
+## AI Feedback
+
+The AI service is currently experiencing high demand.
+
+### Suggestions
+- Review the incorrect questions carefully.
+- Revise the related concepts from your notes.
+- Practice similar questions again.
+- Try generating AI feedback after some time.
+
+Keep learning and stay consistent! 🚀
+`;
+  }
+};

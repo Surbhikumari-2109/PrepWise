@@ -5,6 +5,7 @@ export const saveResult = async (
 ) => {
   const response = await axios.post(
     "https://prepwise-q4c3.onrender.com/result",
+    resultData
   );
 
   return response.data;

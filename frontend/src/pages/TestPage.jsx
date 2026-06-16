@@ -128,17 +128,20 @@ const TestPage = () => {
       ).length;
 
       const user = JSON.parse(localStorage.getItem("user"));
-      console.log(user);
-      console.log("Wrong Questions:");
-      console.log(wrongQuestions);
 
-      await saveResult({
+      console.log("USER:", user);
+
+      const payload = {
         userId: user.id,
         userName: user.name,
         subject: subjectName,
         score,
         total: questions.length,
-      });
+      };
+
+      console.log("PAYLOAD:", payload);
+
+      await saveResult(payload);
       console.log({
         selectedAnswers,
         score,
@@ -169,7 +172,7 @@ const TestPage = () => {
       <h1 className="text-4xl font-bold mb-4">{subjectName.toUpperCase()}</h1>
 
       <p className="text-violet-400 text-xl">{level.toUpperCase()} TEST</p>
-      
+
       <div className="mt-4 flex items-center justify-between">
         <span className="bg-red-500 px-4 py-2 rounded-lg font-bold">
           Time Left: {minutes}:{seconds.toString().padStart(2, "0")}

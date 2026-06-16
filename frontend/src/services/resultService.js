@@ -3,6 +3,7 @@ import axios from "axios";
 export const saveResult = async (
   resultData
 ) => {
+    console.log("SENDING:", resultData);
   const response = await axios.post(
     "https://prepwise-q4c3.onrender.com/result",
     resultData

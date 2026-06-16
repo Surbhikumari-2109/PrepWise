@@ -28,6 +28,7 @@ app.use("/", authRoutes);
 app.use("/", resultRoutes);
 app.use("/", aiRoutes);
 app.use("/", subjectRoutes);
+console.log("Question Routes Loaded ✅");
 app.use("/", questionRoutes);
 
 app.get("/", (req, res) => {
